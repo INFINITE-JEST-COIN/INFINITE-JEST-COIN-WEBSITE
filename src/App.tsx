@@ -79,7 +79,7 @@ function App() {
       {/* Top Marquee - fixed */}
       <div className="fixed top-0 z-50 w-full whitespace-nowrap overflow-hidden border-b border-neutral-200 bg-white bg-opacity-90 backdrop-blur-sm">
         <div className="relative flex items-center transform-gpu perspective-1000">
-          <motion.div 
+          <motion.div
             className="flex py-3"
             initial={{ x: 0 }}
             animate={{ x: "-50%" }}
@@ -98,7 +98,7 @@ function App() {
               <span key={index} className="text-xl font-light uppercase tracking-widest flex items-center bg-white">
                 <motion.span
                   className="inline-block"
-                  animate={{ 
+                  animate={{
                     rotateX: [0, 10, 0],
                     y: [0, -2, 0]
                   }}
@@ -111,9 +111,9 @@ function App() {
                 >
                   Infinite Jest Coin
                 </motion.span>
-                <motion.span 
+                <motion.span
                   className="inline-block mx-4"
-                  animate={{ 
+                  animate={{
                     scale: [1, 1.2, 1],
                     opacity: [1, 0.8, 1],
                     rotateY: [0, 180, 360]
@@ -126,10 +126,10 @@ function App() {
                   }}
                 >
                   •
-                </motion.span> 
+                </motion.span>
                 <motion.span
                   className="inline-block"
-                  animate={{ 
+                  animate={{
                     rotateX: [0, -10, 0],
                     y: [0, 2, 0]
                   }}
@@ -142,9 +142,9 @@ function App() {
                 >
                   The Loop Never Ends
                 </motion.span>
-                <motion.span 
+                <motion.span
                   className="inline-block mx-4"
-                  animate={{ 
+                  animate={{
                     scale: [1, 1.2, 1],
                     opacity: [1, 0.8, 1],
                     rotateY: [0, 180, 360]
@@ -161,7 +161,7 @@ function App() {
               </span>
             ))}
           </motion.div>
-          <motion.div 
+          <motion.div
             className="absolute top-0 left-full flex py-3"
             initial={{ x: 0 }}
             animate={{ x: "-100%" }}
@@ -180,7 +180,7 @@ function App() {
               <span key={index} className="text-xl font-light uppercase tracking-widest flex items-center bg-white">
                 <motion.span
                   className="inline-block"
-                  animate={{ 
+                  animate={{
                     rotateX: [0, 10, 0],
                     y: [0, -2, 0]
                   }}
@@ -193,9 +193,9 @@ function App() {
                 >
                   Infinite Jest Coin
                 </motion.span>
-                <motion.span 
+                <motion.span
                   className="inline-block mx-4"
-                  animate={{ 
+                  animate={{
                     scale: [1, 1.2, 1],
                     opacity: [1, 0.8, 1],
                     rotateY: [0, 180, 360]
@@ -208,10 +208,10 @@ function App() {
                   }}
                 >
                   •
-                </motion.span> 
+                </motion.span>
                 <motion.span
                   className="inline-block"
-                  animate={{ 
+                  animate={{
                     rotateX: [0, -10, 0],
                     y: [0, 2, 0]
                   }}
@@ -224,9 +224,9 @@ function App() {
                 >
                   The Loop Never Ends
                 </motion.span>
-                <motion.span 
+                <motion.span
                   className="inline-block mx-4"
-                  animate={{ 
+                  animate={{
                     scale: [1, 1.2, 1],
                     opacity: [1, 0.8, 1],
                     rotateY: [0, 180, 360]
@@ -316,6 +316,115 @@ function App() {
         >
           Enter the Infinite
         </motion.button>
+      </section>
+      
+      <section className="px-6 py-20 bg-gradient-to-r from-purple-900/10 to-fuchsia-900/10 backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto">
+          <motion.h2
+            className="text-4xl font-bold mb-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            Smart Contract Features
+          </motion.h2>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* ERC20 Features */}
+            <motion.div
+              className="bg-white/90 rounded-xl p-6 shadow-xl"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h3 className="text-2xl font-bold mb-4 text-fuchsia-600">ERC20 Standard</h3>
+              <ul className="space-y-3">
+                <li className="flex items-center">
+                  <motion.span
+                    className="mr-2 text-fuchsia-500"
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    ⚡
+                  </motion.span>
+                  Transfer tokens seamlessly
+                </li>
+                <li className="flex items-center">
+                  <motion.span
+                    className="mr-2 text-fuchsia-500"
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    🔒
+                  </motion.span>
+                  Approve and delegate spending
+                </li>
+              </ul>
+            </motion.div>
+
+            {/* Liquidity Features */}
+            <motion.div
+              className="bg-white/90 rounded-xl p-6 shadow-xl"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h3 className="text-2xl font-bold mb-4 text-fuchsia-600">Liquidity Management</h3>
+              <ul className="space-y-3">
+                <li className="flex items-center">
+                  <motion.span
+                    className="mr-2 text-fuchsia-500"
+                    animate={{ y: [0, -5, 0] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  >
+                    💧
+                  </motion.span>
+                  Automated liquidity pools
+                </li>
+                <li className="flex items-center">
+                  <motion.span
+                    className="mr-2 text-fuchsia-500"
+                    animate={{ rotate: [0, 15, -15, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    ⚖️
+                  </motion.span>
+                  Fair token distribution
+                </li>
+              </ul>
+            </motion.div>
+
+            {/* Smart Contract Actions */}
+            <motion.div
+              className="md:col-span-2 bg-gradient-to-r from-fuchsia-500/10 to-purple-500/10 rounded-xl p-8 mt-8"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <h3 className="text-2xl font-bold mb-6 text-center">Interactive Features</h3>
+              <div className="flex flex-wrap justify-center gap-4">
+                <motion.button
+                  className="px-6 py-3 bg-fuchsia-600 text-white rounded-lg font-semibold"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => window.open('https://app.uniswap.org', '_blank')}
+                >
+                  Trade on Uniswap
+                </motion.button>
+                <motion.button
+                  className="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => window.open('https://etherscan.io', '_blank')}
+                >
+                  View on Etherscan
+                </motion.button>
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </section>
 
       {/* Closing Thoughts */}
