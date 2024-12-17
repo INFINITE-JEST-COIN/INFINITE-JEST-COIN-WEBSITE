@@ -1,4 +1,8 @@
 import React, { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
+import ScrollToTopButton from './components/ScrollToTopButton';
+import ParticleBackground from './components/ParticleBackground';
+import GlowingInfinite from './components/GlowingInfinite';
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -48,69 +52,292 @@ function App() {
 
   return (
     <div className="relative min-h-screen w-full bg-white text-black font-sans overflow-hidden">
+      {/* Particle Background */}
+      <ParticleBackground />
+
       {/* Infinite Background Symbol */}
-      <div className="pointer-events-none absolute inset-0 flex justify-center items-center opacity-5">
-        <div className="text-[30rem] leading-none animate-infiniteRotate select-none">
-          ∞
-        </div>
+      <div className="pointer-events-none absolute inset-0 flex justify-center items-center opacity-30">
+        <GlowingInfinite color={themeColor} />
       </div>
 
-      {/* Top Marquee */}
-      <div className="w-full whitespace-nowrap overflow-x-hidden border-b border-neutral-200">
-        <div className="animate-marquee py-2 flex items-center">
-          <span className="mx-4 text-xl font-light uppercase tracking-widest">
-            Infinite Jest Coin • The Loop Never Ends • Infinite Jest Coin • The Loop Never Ends
-          </span>
-          <span className="mx-4 text-xl font-light uppercase tracking-widest">
-            Infinite Jest Coin • The Loop Never Ends • Infinite Jest Coin • The Loop Never Ends
-          </span>
+      {/* Add decorative elements */}
+      <motion.div
+        className="top-20 left-20 w-32 h-32 rounded-full"
+        style={{
+          background: `radial-gradient(circle at center, ${themeColor}20 0%, transparent 70%)`,
+        }}
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.7, 0.3],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+        }}
+      />
+
+      {/* Top Marquee - fixed */}
+      <div className="fixed top-0 z-50 w-full whitespace-nowrap overflow-hidden border-b border-neutral-200 bg-white bg-opacity-90 backdrop-blur-sm">
+        <div className="relative flex items-center transform-gpu perspective-1000">
+          <motion.div 
+            className="flex py-3"
+            initial={{ x: 0 }}
+            animate={{ x: "-50%" }}
+            transition={{
+              duration: 40,
+              repeat: Infinity,
+              ease: "linear",
+              repeatType: "loop"
+            }}
+            style={{
+              transformStyle: "preserve-3d",
+              transform: "translateZ(0)",
+            }}
+          >
+            {[...Array(3)].map((_, index) => (
+              <span key={index} className="text-xl font-light uppercase tracking-widest flex items-center bg-white">
+                <motion.span
+                  className="inline-block"
+                  animate={{ 
+                    rotateX: [0, 10, 0],
+                    y: [0, -2, 0]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: index * 0.2
+                  }}
+                >
+                  Infinite Jest Coin
+                </motion.span>
+                <motion.span 
+                  className="inline-block mx-4"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [1, 0.8, 1],
+                    rotateY: [0, 180, 360]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: index * 0.3
+                  }}
+                >
+                  •
+                </motion.span> 
+                <motion.span
+                  className="inline-block"
+                  animate={{ 
+                    rotateX: [0, -10, 0],
+                    y: [0, 2, 0]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: index * 0.4
+                  }}
+                >
+                  The Loop Never Ends
+                </motion.span>
+                <motion.span 
+                  className="inline-block mx-4"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [1, 0.8, 1],
+                    rotateY: [0, 180, 360]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: index * 0.5
+                  }}
+                >
+                  •
+                </motion.span>
+              </span>
+            ))}
+          </motion.div>
+          <motion.div 
+            className="absolute top-0 left-full flex py-3"
+            initial={{ x: 0 }}
+            animate={{ x: "-100%" }}
+            transition={{
+              duration: 40,
+              repeat: Infinity,
+              ease: "linear",
+              repeatType: "loop"
+            }}
+            style={{
+              transformStyle: "preserve-3d",
+              transform: "translateZ(0)",
+            }}
+          >
+            {[...Array(3)].map((_, index) => (
+              <span key={index} className="text-xl font-light uppercase tracking-widest flex items-center bg-white">
+                <motion.span
+                  className="inline-block"
+                  animate={{ 
+                    rotateX: [0, 10, 0],
+                    y: [0, -2, 0]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: index * 0.2
+                  }}
+                >
+                  Infinite Jest Coin
+                </motion.span>
+                <motion.span 
+                  className="inline-block mx-4"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [1, 0.8, 1],
+                    rotateY: [0, 180, 360]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: index * 0.3
+                  }}
+                >
+                  •
+                </motion.span> 
+                <motion.span
+                  className="inline-block"
+                  animate={{ 
+                    rotateX: [0, -10, 0],
+                    y: [0, 2, 0]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: index * 0.4
+                  }}
+                >
+                  The Loop Never Ends
+                </motion.span>
+                <motion.span 
+                  className="inline-block mx-4"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [1, 0.8, 1],
+                    rotateY: [0, 180, 360]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: index * 0.5
+                  }}
+                >
+                  •
+                </motion.span>
+              </span>
+            ))}
+          </motion.div>
         </div>
       </div>
 
       {/* Hero / Intro */}
-      <section className="relative flex flex-col items-center justify-center min-h-[80vh] px-6">
-        <h1 className="text-6xl sm:text-8xl font-extrabold text-center leading-tight">
+      <section className="relative flex flex-col items-center justify-center min-h-[80vh] px-6 animate-fadeIn">
+        <motion.h1
+          className="text-6xl sm:text-8xl font-extrabold text-center leading-tight"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
           INFINITE JEST COIN
-        </h1>
-        <p className="mt-8 max-w-xl text-center text-xl text-neutral-700">
+        </motion.h1>
+        <motion.p
+          className="mt-8 max-w-xl text-center text-xl text-neutral-700"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
+        >
           A conceptual token embracing the eternal loop of digital culture.
           No promises, no endpoints. Just the perpetual wink of a never-ending meme.
-        </p>
+        </motion.p>
       </section>
 
       {/* About / Philosophy */}
-      <section className="px-6 py-20 max-w-3xl mx-auto text-center">
-        <h2 className="text-4xl font-bold mb-8">The Idea</h2>
-        <p className="text-lg text-neutral-800 leading-relaxed">
+      <section className="px-6 py-20 max-w-3xl mx-auto text-center animate-fadeIn">
+        <motion.h2
+          className="text-4xl font-bold mb-8"
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1 }}
+        >
+          The Idea
+        </motion.h2>
+        <motion.p
+          className="text-lg text-neutral-800 leading-relaxed"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
+        >
           Infinite Jest Coin draws from the cyclical nature of online humor. Memes rise, morph, and recede,
           only to return in new guises. By tokenizing this loop, we embrace the notion that nothing truly ends,
           it only begins again. Like a literary masterpiece teasing us infinitely, or a cosmic joke without a punchline.
-        </p>
+        </motion.p>
       </section>
 
       {/* The Loop Section */}
-      <section className="relative px-6 py-20 max-w-3xl mx-auto text-center border-t border-b border-neutral-200">
-        <h2 className="text-4xl font-bold mb-8">Embrace the Loop</h2>
-        <p className="text-lg text-neutral-800 leading-relaxed mb-6">
+      <section className="relative px-6 py-20 max-w-3xl mx-auto text-center border-t border-b border-neutral-200 animate-fadeIn">
+        <motion.h2
+          className="text-4xl font-bold mb-8"
+          initial={{ opacity: 0, x: 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1 }}
+        >
+          Embrace the Loop
+        </motion.h2>
+        <motion.p
+          className="text-lg text-neutral-800 leading-relaxed mb-6"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
+        >
           No roadmap. No final frontier. Just an infinite feedback loop.
           We are here to remind you: the joke always continues.
-        </p>
-        <button
+        </motion.p>
+        <motion.button
           onClick={() => setShowModal(true)}
-          className="inline-block mt-6 px-8 py-3 border-2 border-fuchsia-500 text-fuchsia-500 rounded-full font-semibold hover:bg-fuchsia-500 hover:text-white transition-colors"
+          className="inline-block mt-6 px-8 py-3 border-2 border-fuchsia-500 text-fuchsia-500 rounded-full font-semibold hover:bg-fuchsia-500 hover:text-white transition-colors transform hover:scale-105"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
           Enter the Infinite
-        </button>
+        </motion.button>
       </section>
 
       {/* Closing Thoughts */}
-      <section className="px-6 py-20 max-w-3xl mx-auto text-center">
-        <h2 className="text-4xl font-bold mb-8">Infinite Jest</h2>
-        <p className="text-lg text-neutral-800 leading-relaxed">
+      <section className="px-6 py-20 max-w-3xl mx-auto text-center animate-fadeIn">
+        <motion.h2
+          className="text-4xl font-bold mb-8"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          Infinite Jest
+        </motion.h2>
+        <motion.p
+          className="text-lg text-neutral-800 leading-relaxed"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
+        >
           By simply existing, the Infinite Jest Coin acknowledges that our digital lives
           are built on endless references, jokes, and cycles. Embrace the absurdity, for it’s
           what makes us human—even when we’re laughing into the void.
-        </p>
+        </motion.p>
       </section>
 
       {/* Footer */}
@@ -122,13 +349,20 @@ function App() {
 
       {/* Modal */}
       {showModal && (
-        <div
+        <motion.div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           onMouseMove={onDrag}
           onMouseUp={endDrag}
         >
-          <div className="relative w-full h-full flex items-center justify-center overflow-hidden p-4 select-none">
-
+          <motion.div
+            className="relative w-full h-full flex items-center justify-center overflow-hidden p-4 select-none"
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             {/* Rotating Infinite Symbol (SVG) */}
             <div
               className="absolute inset-0 flex items-center justify-center"
@@ -186,24 +420,27 @@ function App() {
             {/* Floating Words */}
             <div className="relative w-full h-full pointer-events-none">
               {words.map((word, idx) => (
-                <div
+                <motion.div
                   key={idx}
-                  className="absolute font-bold whitespace-nowrap animate-floatWord"
+                  className="absolute font-bold whitespace-nowrap"
                   style={{
                     fontSize: `${Math.random() * 2 + 1.5}rem`,
                     top: `${Math.random() * 80 + 10}%`,
                     left: `${Math.random() * 80 + 10}%`,
                     color: themeColor,
-                    animationDelay: `${Math.random() * 3}s`
                   }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: Math.random() * 2, duration: 1 }}
+                  whileHover={{ scale: 1.2 }}
                 >
                   {word}
-                </div>
+                </motion.div>
               ))}
             </div>
 
             {/* Control Panel - Draggable */}
-            <div
+            <motion.div
               ref={panelRef}
               className="absolute cursor-move bg-white bg-opacity-90 text-black p-6 rounded-xl shadow-lg w-full max-w-md"
               style={{
@@ -211,6 +448,9 @@ function App() {
                 left: `${panelPosition.x}px`
               }}
               onMouseDown={startDrag}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
             >
               <h3 className="text-2xl font-bold mb-4 text-center">Infinite Controls</h3>
 
@@ -283,10 +523,13 @@ function App() {
                   Close
                 </button>
               </div>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       )}
+
+      {/* Scroll to Top Button */}
+      <ScrollToTopButton />
     </div>
   );
 }
