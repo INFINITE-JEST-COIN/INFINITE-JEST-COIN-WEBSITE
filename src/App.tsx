@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import ScrollToTopButton from './components/ScrollToTopButton';
 import ParticleBackground from './components/ParticleBackground';
@@ -6,49 +6,8 @@ import GlowingInfinite from './components/GlowingInfinite';
 
 function App() {
   const [showModal, setShowModal] = useState(false);
-  const [words, setWords] = useState(["Inspiration", "Spirit", "Eternal", "Loop", "Cosmic", "Jest", "Infinite"]);
-  const [newWord, setNewWord] = useState("");
-  const [rotationSpeed, setRotationSpeed] = useState(90); // in seconds per full rotation
-  const [themeColor, setThemeColor] = useState("#D946EF"); // Default fuchsia
-
-  // Draggable panel states
-  const [isDragging, setIsDragging] = useState(false);
-  const [panelPosition, setPanelPosition] = useState({ x: 0, y: 0 });
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-  const panelRef = useRef<HTMLDivElement>(null);
-
-  const handleAddWord = () => {
-    if (newWord.trim() !== "") {
-      setWords((prev) => [...prev, newWord.trim()]);
-      setNewWord("");
-    }
-  };
-
-  const handleChangeSpeed = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRotationSpeed(Number(e.target.value));
-  };
-
-  const changeThemeColor = (color: string) => {
-    setThemeColor(color);
-  };
-
-  const startDrag = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (panelRef.current) {
-      setIsDragging(true);
-      const rect = panelRef.current.getBoundingClientRect();
-      setDragOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-    }
-  };
-
-  const onDrag = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isDragging) {
-      setPanelPosition({ x: e.clientX - dragOffset.x, y: e.clientY - dragOffset.y });
-    }
-  };
-
-  const endDrag = () => {
-    setIsDragging(false);
-  };
+  const [rotationSpeed, _setRotationSpeed] = useState(90); // in seconds per full rotation
+  const [themeColor, _setThemeColor] = useState("#D946EF"); // Default fuchsia
 
   return (
     <div className="relative min-h-screen w-full bg-white text-black font-sans overflow-hidden">
@@ -318,6 +277,7 @@ function App() {
         </motion.button>
       </section>
       
+      {/* Smart Contract Features */}
       <section className="px-6 py-20 bg-gradient-to-r from-purple-900/10 to-fuchsia-900/10 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto">
           <motion.h2
@@ -326,11 +286,11 @@ function App() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            Smart Contract Features
+            Core Features
           </motion.h2>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {/* ERC20 Features */}
+            {/* Seamless Liquidity Addition */}
             <motion.div
               className="bg-white/90 rounded-xl p-6 shadow-xl"
               initial={{ opacity: 0, x: -50 }}
@@ -338,32 +298,13 @@ function App() {
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.5 }}
             >
-              <h3 className="text-2xl font-bold mb-4 text-fuchsia-600">ERC20 Standard</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center">
-                  <motion.span
-                    className="mr-2 text-fuchsia-500"
-                    animate={{ rotate: [0, 360] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    ⚡
-                  </motion.span>
-                  Transfer tokens seamlessly
-                </li>
-                <li className="flex items-center">
-                  <motion.span
-                    className="mr-2 text-fuchsia-500"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    🔒
-                  </motion.span>
-                  Approve and delegate spending
-                </li>
-              </ul>
+              <h3 className="text-2xl font-bold mb-4 text-fuchsia-600">Seamless Liquidity Addition</h3>
+              <p className="text-lg text-neutral-800 leading-relaxed">
+                Our smart contract, <strong>BuyAndAddLiquidity</strong>, automates the process of adding liquidity to Uniswap V2 pools. Effortlessly contribute to the liquidity of the IJC-WETH pool with built-in slippage protection for secure transactions.
+              </p>
             </motion.div>
 
-            {/* Liquidity Features */}
+            {/* Instant Bonus Rewards */}
             <motion.div
               className="bg-white/90 rounded-xl p-6 shadow-xl"
               initial={{ opacity: 0, x: 50 }}
@@ -371,57 +312,38 @@ function App() {
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.5 }}
             >
-              <h3 className="text-2xl font-bold mb-4 text-fuchsia-600">Liquidity Management</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center">
-                  <motion.span
-                    className="mr-2 text-fuchsia-500"
-                    animate={{ y: [0, -5, 0] }}
-                    transition={{ duration: 1, repeat: Infinity }}
-                  >
-                    💧
-                  </motion.span>
-                  Automated liquidity pools
-                </li>
-                <li className="flex items-center">
-                  <motion.span
-                    className="mr-2 text-fuchsia-500"
-                    animate={{ rotate: [0, 15, -15, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    ⚖️
-                  </motion.span>
-                  Fair token distribution
-                </li>
-              </ul>
+              <h3 className="text-2xl font-bold mb-4 text-fuchsia-600">Instant Bonus Rewards</h3>
+              <p className="text-lg text-neutral-800 leading-relaxed">
+                Receive a bonus of IJC tokens every time you add liquidity! Our contract rewards you with 10% of the IJC tokens you add to the pool, directly to your wallet.
+              </p>
             </motion.div>
 
-            {/* Smart Contract Actions */}
+            {/* Transparent and Fair */}
             <motion.div
-              className="md:col-span-2 bg-gradient-to-r from-fuchsia-500/10 to-purple-500/10 rounded-xl p-8 mt-8"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              className="bg-white/90 rounded-xl p-6 shadow-xl"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.5 }}
             >
-              <h3 className="text-2xl font-bold mb-6 text-center">Interactive Features</h3>
-              <div className="flex flex-wrap justify-center gap-4">
-                <motion.button
-                  className="px-6 py-3 bg-fuchsia-600 text-white rounded-lg font-semibold"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => window.open('https://app.uniswap.org', '_blank')}
-                >
-                  Trade on Uniswap
-                </motion.button>
-                <motion.button
-                  className="px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => window.open('https://etherscan.io', '_blank')}
-                >
-                  View on Etherscan
-                </motion.button>
-              </div>
+              <h3 className="text-2xl font-bold mb-4 text-fuchsia-600">Transparent and Fair</h3>
+              <p className="text-lg text-neutral-800 leading-relaxed">
+                With IJC, what you see is what you get. Our contracts are open-source and available for anyone to review, ensuring transparency and fairness for all users.
+              </p>
+            </motion.div>
+
+            {/* Community-Driven */}
+            <motion.div
+              className="bg-white/90 rounded-xl p-6 shadow-xl"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h3 className="text-2xl font-bold mb-4 text-fuchsia-600">Community-Driven</h3>
+              <p className="text-lg text-neutral-800 leading-relaxed">
+                Infinite Jest Coin is more than just a currency. it's a community. Join us to build a vibrant and inclusive community of meme lovers and crypto enthusiasts.
+              </p>
             </motion.div>
           </div>
         </div>
@@ -463,8 +385,7 @@ function App() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onMouseMove={onDrag}
-          onMouseUp={endDrag}
+          onClick={() => setShowModal(false)}
         >
           <motion.div
             className="relative w-full h-full flex items-center justify-center overflow-hidden p-4 select-none"
@@ -472,7 +393,7 @@ function App() {
             animate={{ scale: 1 }}
             transition={{ duration: 0.3 }}
           >
-            {/* Rotating Infinite Symbol (SVG) */}
+            {/* Quantum Paradox Visual */}
             <div
               className="absolute inset-0 flex items-center justify-center"
               style={{
@@ -525,114 +446,6 @@ function App() {
                 </g>
               </svg>
             </div>
-
-            {/* Floating Words */}
-            <div className="relative w-full h-full pointer-events-none">
-              {words.map((word, idx) => (
-                <motion.div
-                  key={idx}
-                  className="absolute font-bold whitespace-nowrap"
-                  style={{
-                    fontSize: `${Math.random() * 2 + 1.5}rem`,
-                    top: `${Math.random() * 80 + 10}%`,
-                    left: `${Math.random() * 80 + 10}%`,
-                    color: themeColor,
-                  }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: Math.random() * 2, duration: 1 }}
-                  whileHover={{ scale: 1.2 }}
-                >
-                  {word}
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Control Panel - Draggable */}
-            <motion.div
-              ref={panelRef}
-              className="absolute cursor-move bg-white bg-opacity-90 text-black p-6 rounded-xl shadow-lg w-full max-w-md"
-              style={{
-                top: `${panelPosition.y}px`,
-                left: `${panelPosition.x}px`
-              }}
-              onMouseDown={startDrag}
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <h3 className="text-2xl font-bold mb-4 text-center">Infinite Controls</h3>
-
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">
-                  Add a Word
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={newWord}
-                    onChange={(e) => setNewWord(e.target.value)}
-                    className="flex-grow border border-neutral-300 rounded px-2 py-1"
-                    placeholder="Type a new word..."
-                  />
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent drag start when clicking button
-                      handleAddWord();
-                    }}
-                    className="px-4 py-1 bg-neutral-800 text-white rounded hover:bg-neutral-700"
-                  >
-                    Add
-                  </button>
-                </div>
-              </div>
-
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">
-                  Rotation Speed (seconds per rotation)
-                </label>
-                <input
-                  type="range"
-                  min="30"
-                  max="180"
-                  value={rotationSpeed}
-                  onChange={(e) => { e.stopPropagation(); handleChangeSpeed(e); }}
-                  className="w-full"
-                />
-                <p className="text-sm text-neutral-600 mt-1">Current: {rotationSpeed}s</p>
-              </div>
-
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">
-                  Theme Color
-                </label>
-                <div className="flex gap-2">
-                  {["#D946EF", "#22C55E", "#3B82F6", "#F97316", "#EF4444"].map((color) => (
-                    <button
-                      key={color}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        changeThemeColor(color);
-                      }}
-                      className="w-8 h-8 rounded-full border-2 border-white"
-                      style={{ backgroundColor: color }}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              <div className="text-center mt-6">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowModal(false);
-                  }}
-                  className="px-4 py-2 bg-black text-white font-semibold rounded hover:bg-neutral-700 transition-colors"
-                >
-                  Close
-                </button>
-              </div>
-            </motion.div>
           </motion.div>
         </motion.div>
       )}
