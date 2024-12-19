@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 interface Link {
     text: string;
     href: string;
+    icon?: React.ReactNode;
 }
 
 interface FeatureCardProps {
@@ -34,9 +35,7 @@ const FeatureCard = ({ title, description, links }: FeatureCardProps) => {
                             rel="noopener noreferrer"
                             className="text-fuchsia-500 hover:text-fuchsia-600 flex items-center gap-1"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
-                            </svg>
+                            {link.icon}
                             {link.text}
                         </a>
                     ))}

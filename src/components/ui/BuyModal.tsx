@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { useSendTransaction, useReadContract } from 'wagmi'
+import { useSendTransaction, useReadContract, useAccount } from 'wagmi'
 import { parseEther } from 'viem'
 import { pairAbi } from '../../abis/pair';
 import { ijcAbi } from '../../abis/ijc';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 interface BuyModalProps {
     isOpen: boolean;
@@ -12,6 +13,8 @@ interface BuyModalProps {
 
 const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
     const [ethAmount, setEthAmount] = useState<string>('');
+    const [isProcessing, setIsProcessing] = useState(false);
+    const { address } = useAccount();
     const [calculations, setCalculations] = useState({
         ijcAmount: '0',
         bonusAmount: '0',
@@ -32,13 +35,20 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
         args: [import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS || ""],
     })
 
-    const { sendTransaction } = useSendTransaction()
+    const { sendTransaction, isPending } = useSendTransaction()
 
-    const buyAndAddLiquidity = () => {
-        sendTransaction({
-            to: import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS || "",
-            value: parseEther(ethAmount),
-        })
+    const buyAndAddLiquidity = async () => {
+        try {
+            setIsProcessing(true);
+            await sendTransaction({
+                to: import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS || "",
+                value: parseEther(ethAmount),
+            })
+        } catch (error) {
+            console.error('Transaction failed:', error);
+        } finally {
+            setIsProcessing(false);
+        }
     }
 
     useEffect(() => {
@@ -92,6 +102,35 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
             });
         }
     }, [ethAmount]);
+
+    const renderActionButton = () => {
+        if (!address) {
+            return (
+                <div className="flex justify-center">
+                    <ConnectButton />
+                </div>
+            );
+        }
+
+        return (
+            <motion.button
+                className="w-full px-6 py-3 bg-fuchsia-500 text-white rounded-full font-semibold shadow-lg hover:bg-fuchsia-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                whileHover={{ scale: isProcessing ? 1 : 1.02 }}
+                whileTap={{ scale: isProcessing ? 1 : 0.98 }}
+                onClick={buyAndAddLiquidity}
+                disabled={isProcessing || isPending}
+            >
+                {(isProcessing || isPending) ? (
+                    <>
+                        <LoadingSpinner />
+                        Processing...
+                    </>
+                ) : (
+                    'Add Liquidity'
+                )}
+            </motion.button>
+        );
+    };
 
     if (!isOpen) return null;
 
@@ -161,19 +200,34 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
                         </div>
                     )}
 
-                    {/* Buy Button */}
-                    <motion.button
-                        className="w-full px-6 py-3 bg-fuchsia-500 text-white rounded-full font-semibold shadow-lg hover:bg-fuchsia-600 transition-colors"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={buyAndAddLiquidity}
-                    >
-                        Add Liquidity
-                    </motion.button>
+                    {renderActionButton()}
                 </div>
             </motion.div>
         </motion.div>
     );
 };
+
+const LoadingSpinner = () => (
+    <svg
+        className="animate-spin h-5 w-5"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+    >
+        <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+        />
+        <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        />
+    </svg>
+);
 
 export default BuyModal;
