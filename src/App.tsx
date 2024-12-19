@@ -10,7 +10,7 @@ function App() {
   const [themeColor, _setThemeColor] = useState("#D946EF"); // Default fuchsia
   const [showMemeFactory, setShowMemeFactory] = useState(false);
   const [memeIdea, setMemeIdea] = useState('');
-  const [isGeneratingMeme, setIsGeneratingMeme] = useState(false);
+  const [isGeneratingMeme, _setIsGeneratingMeme] = useState(false);
   const [memeName, setMemeName] = useState('');
   const [memeSymbol, setMemeSymbol] = useState('');
 
@@ -319,9 +319,33 @@ function App() {
               transition={{ duration: 0.5 }}
             >
               <h3 className="text-2xl font-bold mb-4 text-fuchsia-600">Seamless Liquidity Addition</h3>
-              <p className="text-lg text-neutral-800 leading-relaxed">
+              <p className="text-lg text-neutral-800 leading-relaxed mb-4">
                 Our smart contract, <strong>BuyAndAddLiquidity</strong>, automates the process of adding liquidity to Uniswap V2 pools. Effortlessly contribute to the liquidity of the IJC-WETH pool with built-in slippage protection for secure transactions.
               </p>
+              <div className="flex gap-4 justify-end text-sm">
+                <a
+                  href="https://github.com/yourusername/your-repo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-fuchsia-500 hover:text-fuchsia-600 flex items-center gap-1"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                  </svg>
+                  GitHub
+                </a>
+                <a
+                  href="https://etherscan.io/address/your-contract-address"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-fuchsia-500 hover:text-fuchsia-600 flex items-center gap-1"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" />
+                  </svg>
+                  Etherscan
+                </a>
+              </div>
             </motion.div>
 
             {/* Instant Bonus Rewards */}
@@ -333,9 +357,33 @@ function App() {
               transition={{ duration: 0.5 }}
             >
               <h3 className="text-2xl font-bold mb-4 text-fuchsia-600">Instant Bonus Rewards</h3>
-              <p className="text-lg text-neutral-800 leading-relaxed">
+              <p className="text-lg text-neutral-800 leading-relaxed mb-4">
                 Receive a bonus of IJC tokens every time you add liquidity! Our contract rewards you with 10% of the IJC tokens you add to the pool, directly to your wallet.
               </p>
+              <div className="flex gap-4 justify-end text-sm">
+                <a
+                  href="https://github.com/yourusername/your-repo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-fuchsia-500 hover:text-fuchsia-600 flex items-center gap-1"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                  </svg>
+                  GitHub
+                </a>
+                <a
+                  href="https://etherscan.io/address/your-contract-address"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-fuchsia-500 hover:text-fuchsia-600 flex items-center gap-1"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m6.75 7.5 3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0 0 21 18V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v12a2.25 2.25 0 0 0 2.25 2.25Z" />
+                  </svg>
+                  Etherscan
+                </a>
+              </div>
             </motion.div>
 
             {/* Transparent and Fair */}
@@ -372,14 +420,28 @@ function App() {
       {/* Meme Factory */}
       <section className="px-6 py-20 bg-gradient-to-r from-fuchsia-100 to-purple-100" id="meme-factory">
         <div className="max-w-4xl mx-auto">
-          <motion.h2
-            className="text-4xl font-bold mb-8 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            Meme Factory
-          </motion.h2>
+          <div className="relative inline-block w-full text-center">
+            <motion.h2
+              className="text-4xl font-bold mb-8 text-center inline-flex items-center gap-4 justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              Meme Factory
+              <motion.span
+                className="inline-block px-3 py-1 bg-fuchsia-500 text-white text-sm rounded-full font-medium"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                animate={{
+                  y: [0, -4, 0],
+                }}
+                whileHover={{ scale: 1.05 }}
+              >
+                Coming Soon
+              </motion.span>
+            </motion.h2>
+          </div>
 
           <motion.div
             className="bg-white/90 rounded-xl p-8 shadow-xl"
@@ -448,32 +510,47 @@ function App() {
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="bg-white rounded-xl p-8 max-w-2xl w-full mx-4"
+            className="bg-white rounded-xl p-8 max-w-2xl w-full mx-4 relative overflow-hidden"
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.3 }}
           >
+            {/* Coming Soon Overlay */}
+            <div className="absolute inset-0 bg-fuchsia-500/70 flex flex-col items-center justify-center z-10">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-center"
+              >
+                <h3 className="text-4xl font-bold text-white mb-4">Coming Soon!</h3>
+                <p className="text-white/90 text-lg max-w-md mx-auto">
+                  Our AI-powered Meme Factory is being fine-tuned for maximum memetic potential.
+                  Stay tuned for the launch!
+                </p>
+              </motion.div>
+            </div>
+
+            {/* Existing Modal Content (will be behind overlay) */}
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-2xl font-bold text-fuchsia-600">Meme Factory Wizard</h3>
               <button
                 onClick={() => setShowMemeFactory(false)}
-                className="text-neutral-500 hover:text-neutral-700"
+                className="text-neutral-500 hover:text-neutral-700 z-20 relative"
               >
                 ✕
               </button>
             </div>
 
-            {/* Add your meme generation wizard steps here */}
             <div className="space-y-6">
-              {/* Wizard content will go here */}
               <p className="text-neutral-600">
                 Your meme coin is being created. This process includes:
               </p>
               <ul className="list-disc list-inside space-y-2 text-neutral-600">
+                <li>Website creation</li>
                 <li>Smart contract generation</li>
                 <li>Tokenomics configuration</li>
                 <li>Logo and basic branding</li>
-                <li>Website creation</li>
               </ul>
             </div>
           </motion.div>
