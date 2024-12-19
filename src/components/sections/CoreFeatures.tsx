@@ -10,16 +10,16 @@ const features = [
         title: "Seamless Liquidity Addition",
         description: "Our smart contract, BuyAndAddLiquidity, streamlines the process of adding liquidity to Uniswap V2 pools. By simply sending ETH to the BuyAndAddLiquidity contract, you can seamlessly contribute to the liquidity of the IJC-WETH pool. The contract includes built-in slippage protection, ensuring secure and efficient transactions. This feature will be abled until the IJC bonus rewards are over.",
         links: [
-            { text: "GitHub", href: "https://github.com/yourusername/your-repo" },
-            { text: "Etherscan", href: "https://etherscan.io/address/your-contract-address" }
+            { text: "GitHub", href: "https://github.com/INFINITE-JEST-COIN/INFINITE-JEST-COIN-CONTRACTS/" },
+            { text: "Basescan", href: "https://basescan.org/address/0x0000000000000000000000000000000000000000" }
         ]
     },
     {
         title: "Instant Bonus Rewards",
         description: "Receive a bonus of IJC tokens every time you add liquidity! Our contract rewards you with 10% of the IJC tokens you add to the pool, directly to your wallet. This feature will be abled until the IJC bonus rewards are over.",
         links: [
-            { text: "GitHub", href: "https://github.com/yourusername/your-repo" },
-            { text: "Etherscan", href: "https://etherscan.io/address/your-contract-address" }
+            { text: "GitHub", href: "https://github.com/INFINITE-JEST-COIN/INFINITE-JEST-COIN-CONTRACTS/" },
+            { text: "Basescan", href: "https://basescan.org/address/0x0000000000000000000000000000000000000000" }
         ]
     },
     {

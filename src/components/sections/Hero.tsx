@@ -3,9 +3,6 @@ import { motion } from 'framer-motion';
 const Hero = () => {
     return (
         <section className="relative min-h-screen">
-            {/* Background gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-fuchsia-50/50 to-purple-50/50" />
-
             {/* Main content container */}
             <div className="relative flex flex-col items-center justify-center min-h-screen px-4 py-[100px] lg:py-6 sm:px-6 lg:px-8 animate-fadeIn">
                 {/* Hero Title Group */}
