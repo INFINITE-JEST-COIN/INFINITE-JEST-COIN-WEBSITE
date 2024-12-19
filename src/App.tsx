@@ -276,7 +276,7 @@ function App() {
           Enter the Infinite
         </motion.button>
       </section>
-      
+
       {/* Smart Contract Features */}
       <section className="px-6 py-20 bg-gradient-to-r from-purple-900/10 to-fuchsia-900/10 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto">
@@ -452,6 +452,50 @@ function App() {
 
       {/* Scroll to Top Button */}
       <ScrollToTopButton />
+
+      <div className="fixed right-2 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-2">
+        {/* Buy IJC Button */}
+        <motion.button
+          className="px-3 py-2 bg-fuchsia-500 text-white rounded-full font-semibold shadow-lg hover:bg-fuchsia-600 transition-colors"
+          animate={{
+            rotate: [0, -10, -5],
+            x: [0, 5, 0],
+            y: [0, -5, 0],
+            transition: {
+              duration: 0.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            }
+          }}
+          whileTap={{ scale: 0.95 }}
+          // initial={{ opacity: 0, x: -50 }}
+          transition={{ duration: 0.5 }}
+        >
+          Buy IJC
+        </motion.button>
+
+        {/* Enter App Button */}
+        <motion.button
+          className="px-3 py-2 bg-fuchsia-500 text-white rounded-full font-semibold shadow-lg hover:bg-fuchsia-600 transition-colors"
+          animate={{
+            rotate: [0, -10, -5],
+            x: [0, 5, 0],
+            y: [0, -5, 0],
+            transition: {
+              duration: 0.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            }
+          }}
+          whileTap={{ scale: 0.95 }}
+          // initial={{ opacity: 0, x: -50 }}
+          transition={{ duration: 0.5 }}
+        >
+          Create meme
+        </motion.button>
+      </div>
     </div>
   );
 }
