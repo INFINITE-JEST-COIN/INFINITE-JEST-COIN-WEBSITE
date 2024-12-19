@@ -113,7 +113,7 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
                     )}
                 </button>
                 <a
-                    href={`https://${import.meta.env.VITE_CHAIN_ID === '8453' ? 'basescan.org' : 'sepolia.basescan.org'}/address/${address}`}
+                    href={`https://${import.meta.env.VITE_NETWORK_ID === '8453' ? 'basescan.org' : 'sepolia.etherscan.io'}/address/${address}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-fuchsia-500 hover:text-fuchsia-600"
@@ -257,7 +257,7 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
                     <p className="text-sm text-yellow-700 text-justify">
                         Note: You may see a security alert because this is a custom contract interaction.
                         Please verify the contract address and transaction details before proceeding.<br />
-                        <a href={`https://${import.meta.env.VITE_CHAIN_ID === '8453' ? 'basescan.org' : 'sepolia.basescan.org'}/address/${import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS}`} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+                        <a href={`https://${import.meta.env.VITE_NETWORK_ID === '8453' ? 'basescan.org' : 'sepolia.etherscan.io'}/address/${import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS}`} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
                             CA:
                             <code className="font-mono text-red-500 break-all">
                                 {import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS}

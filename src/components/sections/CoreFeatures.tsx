@@ -18,8 +18,8 @@ const features = [
                 </svg>
             },
             {
-                text: import.meta.env.VITE_CHAIN_ID === '8453' ? "Basescan" : "Sepolia scan",
-                href: import.meta.env.VITE_CHAIN_ID === '8453' ? `https://basescan.org/address/${import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS}` : `https://sepolia.basescan.org/address/${import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS}`,
+                text: import.meta.env.VITE_NETWORK_ID === '8453' ? "Basescan" : "Sepolia scan",
+                href: import.meta.env.VITE_NETWORK_ID === '8453' ? `https://basescan.org/address/${import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS}` : `https://sepolia.etherscan.io/address/${import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS}`,
                 icon: <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
@@ -49,8 +49,8 @@ const features = [
                 </svg>
             },
             {
-                text: import.meta.env.VITE_CHAIN_ID === '8453' ? "Basescan" : "Sepolia scan",
-                href: import.meta.env.VITE_CHAIN_ID === '8453' ? `https://basescan.org/address/${import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS}` : `https://sepolia.basescan.org/address/${import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS}`,
+                text: import.meta.env.VITE_NETWORK_ID === '8453' ? "Basescan" : "Sepolia scan",
+                href: import.meta.env.VITE_NETWORK_ID === '8453' ? `https://basescan.org/address/${import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS}` : `https://sepolia.etherscan.io/address/${import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS}`,
                 icon: <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
