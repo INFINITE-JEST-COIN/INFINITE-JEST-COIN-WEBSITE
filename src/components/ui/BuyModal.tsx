@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { useSendTransaction } from 'wagmi'
+import { parseEther } from 'viem'
 
 interface BuyModalProps {
     isOpen: boolean;
@@ -13,6 +15,45 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
         bonusAmount: '0',
         liquidityAdded: '0'
     });
+
+    const { sendTransaction } = useSendTransaction()
+
+    const buyAndAddLiquidity = () => {
+        sendTransaction({
+            to: import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS || "",
+            value: parseEther(ethAmount),
+        })
+    }
+
+    const renderAddressWithIcon = (address: string, label: string) => (
+        <div className="flex items-center justify-between py-2">
+            <div className="text-sm text-neutral-600">
+                <span className="font-medium mr-2">{label}:</span>
+                <span className="font-mono text-xs">{address.slice(0, 6)}...{address.slice(-4)}</span>
+            </div>
+            <a 
+                href={`https://${import.meta.env.VITE_CHAIN_ID === '8453' ? 'basescan.org' : 'sepolia.basescan.org'}/address/${address}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-fuchsia-500 hover:text-fuchsia-600"
+            >
+                <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    className="h-5 w-5" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                >
+                    <path 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round" 
+                        strokeWidth={2} 
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
+                    />
+                </svg>
+            </a>
+        </div>
+    );
 
     // Mock prices - replace with actual data from your smart contract
     const mockData = {
@@ -52,7 +93,7 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
                 transition={{ duration: 0.3 }}
             >
                 <div className="flex justify-between items-center mb-6">
-                    <h3 className="text-2xl font-bold text-fuchsia-600">Add Liquidity and Get Bonus IJC</h3>
+                    <h3 className="text-2xl font-bold text-fuchsia-600">Add Liquidity & Get Bonus IJC</h3>
                     <button
                         onClick={onClose}
                         className="text-neutral-500 hover:text-neutral-700"
@@ -63,6 +104,11 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
 
                 <div className="space-y-6">
                     {/* Current Price and Bonus Info */}
+                    <div className="bg-neutral-50 p-4 rounded-lg space-y-1">
+                        {renderAddressWithIcon(import.meta.env.VITE_IJC_CONTRACT_ADDRESS || "", "IJC Token")}
+                        {renderAddressWithIcon(import.meta.env.VITE_PAIR_CONTRACT_ADDRESS || "", "LP Pair")}
+                        {renderAddressWithIcon(import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS || "", "Buy Contract")}
+                    </div>
                     <div className="bg-fuchsia-50 p-4 rounded-lg space-y-2">
                         <p className="text-sm text-fuchsia-600">
                             Current Price: {mockData.ijcPrice} ETH
@@ -104,6 +150,7 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
                         className="w-full px-6 py-3 bg-fuchsia-500 text-white rounded-full font-semibold shadow-lg hover:bg-fuchsia-600 transition-colors"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
+                        onClick={buyAndAddLiquidity}
                     >
                         Add Liquidity
                     </motion.button>
