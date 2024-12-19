@@ -11,6 +11,8 @@ function App() {
   const [showMemeFactory, setShowMemeFactory] = useState(false);
   const [memeIdea, setMemeIdea] = useState('');
   const [isGeneratingMeme, setIsGeneratingMeme] = useState(false);
+  const [memeName, setMemeName] = useState('');
+  const [memeSymbol, setMemeSymbol] = useState('');
 
   return (
     <div className="relative min-h-screen w-full bg-white text-black font-sans overflow-hidden">
@@ -391,6 +393,24 @@ function App() {
 
             <div className="space-y-6">
               <div className="flex flex-col items-center gap-4">
+                <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <input
+                    type="text"
+                    value={memeName}
+                    onChange={(e) => setMemeName(e.target.value)}
+                    placeholder="Token Name (e.g., Doge Coin)"
+                    className="w-full p-4 border-2 border-fuchsia-200 rounded-lg focus:border-fuchsia-500 focus:ring-2 focus:ring-fuchsia-200 transition-all"
+                  />
+                  <input
+                    type="text"
+                    value={memeSymbol}
+                    onChange={(e) => setMemeSymbol(e.target.value.toUpperCase())}
+                    placeholder="Token Symbol (e.g., DOGE)"
+                    className="w-full p-4 border-2 border-fuchsia-200 rounded-lg focus:border-fuchsia-500 focus:ring-2 focus:ring-fuchsia-200 transition-all"
+                    maxLength={10}
+                  />
+                </div>
+
                 <textarea
                   value={memeIdea}
                   onChange={(e) => setMemeIdea(e.target.value)}
@@ -419,7 +439,7 @@ function App() {
         </div>
       </section>
 
-      {/* Add this modal for the Meme Factory */}
+      {/* Meme Factory Modal */}
       {showMemeFactory && (
         <motion.div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
@@ -453,7 +473,7 @@ function App() {
                 <li>Smart contract generation</li>
                 <li>Tokenomics configuration</li>
                 <li>Logo and basic branding</li>
-                <li>Social media templates</li>
+                <li>Website creation</li>
               </ul>
             </div>
           </motion.div>
