@@ -8,6 +8,9 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [rotationSpeed, _setRotationSpeed] = useState(90); // in seconds per full rotation
   const [themeColor, _setThemeColor] = useState("#D946EF"); // Default fuchsia
+  const [showMemeFactory, setShowMemeFactory] = useState(false);
+  const [memeIdea, setMemeIdea] = useState('');
+  const [isGeneratingMeme, setIsGeneratingMeme] = useState(false);
 
   return (
     <div className="relative min-h-screen w-full bg-white text-black font-sans overflow-hidden">
@@ -15,7 +18,7 @@ function App() {
       <ParticleBackground />
 
       {/* Infinite Background Symbol */}
-      <div className="pointer-events-none absolute inset-0 flex justify-center items-center opacity-30">
+      <div className="pointer-events-none fixed inset-0 flex justify-center items-center opacity-30 z-10">
         <GlowingInfinite color={themeColor} />
       </div>
 
@@ -221,8 +224,9 @@ function App() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 1 }}
         >
-          A conceptual token embracing the eternal loop of digital culture.
-          No promises, no endpoints. Just the perpetual wink of a never-ending meme.
+          A conceptual token embracing the eternal loop of digital culture, powered by AI-driven meme creation.
+          No promises, no endpoints—just the perpetual evolution of memes, where anyone can become part
+          of the never-ending story through our Meme Factory.
         </motion.p>
       </section>
 
@@ -277,7 +281,7 @@ function App() {
         </motion.button>
       </section>
 
-      {/* Smart Contract Features */}
+      {/* Core Features */}
       <section className="px-6 py-20 bg-gradient-to-r from-purple-900/10 to-fuchsia-900/10 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto">
           <motion.h2
@@ -289,7 +293,21 @@ function App() {
             Core Features
           </motion.h2>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-1 gap-8">
+            {/* AI-Powered Meme Factory */}
+            <motion.div
+              className="bg-white/90 rounded-xl p-6 shadow-xl"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h3 className="text-2xl font-bold mb-4 text-fuchsia-600">AI-Powered Meme Factory</h3>
+              <p className="text-lg text-neutral-800 leading-relaxed">
+                Create your own meme coin in minutes! Our AI-powered Meme Factory helps you generate unique tokens with custom smart contracts, tokenomics, and marketing materials - even if you don't have a specific idea in mind.
+              </p>
+            </motion.div>
+
             {/* Seamless Liquidity Addition */}
             <motion.div
               className="bg-white/90 rounded-xl p-6 shadow-xl"
@@ -348,6 +366,99 @@ function App() {
           </div>
         </div>
       </section>
+
+      {/* Meme Factory */}
+      <section className="px-6 py-20 bg-gradient-to-r from-fuchsia-100 to-purple-100" id="meme-factory">
+        <div className="max-w-4xl mx-auto">
+          <motion.h2
+            className="text-4xl font-bold mb-8 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            Meme Factory
+          </motion.h2>
+
+          <motion.div
+            className="bg-white/90 rounded-xl p-8 shadow-xl"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3 className="text-2xl font-bold mb-6 text-fuchsia-600 text-center">
+              Create Your Own Meme Coin in 10 Minutes
+            </h3>
+
+            <div className="space-y-6">
+              <div className="flex flex-col items-center gap-4">
+                <textarea
+                  value={memeIdea}
+                  onChange={(e) => setMemeIdea(e.target.value)}
+                  placeholder="Enter your meme coin idea... or leave blank for AI suggestions"
+                  className="w-full p-4 border-2 border-fuchsia-200 rounded-lg focus:border-fuchsia-500 focus:ring-2 focus:ring-fuchsia-200 transition-all"
+                  rows={4}
+                />
+
+                <motion.button
+                  onClick={() => setShowMemeFactory(true)}
+                  className="px-8 py-3 bg-fuchsia-500 text-white rounded-full font-semibold shadow-lg hover:bg-fuchsia-600 transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  disabled={isGeneratingMeme}
+                >
+                  {isGeneratingMeme ? 'Generating...' : 'Generate Meme Coin'}
+                </motion.button>
+              </div>
+
+              <p className="text-center text-neutral-600">
+                Our AI-powered Meme Factory will help you create a unique meme coin with smart contract deployment,
+                custom tokenomics, and basic marketing materials.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Add this modal for the Meme Factory */}
+      {showMemeFactory && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div
+            className="bg-white rounded-xl p-8 max-w-2xl w-full mx-4"
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-fuchsia-600">Meme Factory Wizard</h3>
+              <button
+                onClick={() => setShowMemeFactory(false)}
+                className="text-neutral-500 hover:text-neutral-700"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Add your meme generation wizard steps here */}
+            <div className="space-y-6">
+              {/* Wizard content will go here */}
+              <p className="text-neutral-600">
+                Your meme coin is being created. This process includes:
+              </p>
+              <ul className="list-disc list-inside space-y-2 text-neutral-600">
+                <li>Smart contract generation</li>
+                <li>Tokenomics configuration</li>
+                <li>Logo and basic branding</li>
+                <li>Social media templates</li>
+              </ul>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
 
       {/* Closing Thoughts */}
       <section className="px-6 py-20 max-w-3xl mx-auto text-center animate-fadeIn">
@@ -476,25 +587,27 @@ function App() {
         </motion.button>
 
         {/* Enter App Button */}
-        <motion.button
-          className="px-3 py-2 bg-fuchsia-500 text-white rounded-full font-semibold shadow-lg hover:bg-fuchsia-600 transition-colors"
-          animate={{
-            rotate: [0, -10, -5],
-            x: [0, 5, 0],
-            y: [0, -5, 0],
-            transition: {
-              duration: 0.5,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut"
-            }
-          }}
-          whileTap={{ scale: 0.95 }}
-          // initial={{ opacity: 0, x: -50 }}
-          transition={{ duration: 0.5 }}
-        >
-          Create meme
-        </motion.button>
+        <a href="#meme-factory">
+          <motion.button
+            className="px-3 py-2 bg-fuchsia-500 text-white rounded-full font-semibold shadow-lg hover:bg-fuchsia-600 transition-colors"
+            animate={{
+              rotate: [0, -10, -5],
+              x: [0, 5, 0],
+              y: [0, -5, 0],
+              transition: {
+                duration: 0.5,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut"
+              }
+            }}
+            whileTap={{ scale: 0.95 }}
+            // initial={{ opacity: 0, x: -50 }}
+            transition={{ duration: 0.5 }}
+          >
+            Create meme
+          </motion.button>
+        </a>
       </div>
     </div>
   );
