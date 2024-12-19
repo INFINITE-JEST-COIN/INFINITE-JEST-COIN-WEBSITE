@@ -18,6 +18,7 @@ import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import { config } from './config/wagmi'
 import '@rainbow-me/rainbowkit/styles.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import BuyModal from './components/ui/BuyModal';
 
 // Create a client
 const queryClient = new QueryClient()
@@ -30,6 +31,7 @@ function App() {
     const [isGeneratingMeme] = useState(false);
     const [memeName, setMemeName] = useState('');
     const [memeSymbol, setMemeSymbol] = useState('');
+    const [showBuyModal, setShowBuyModal] = useState(false);
 
     const handleMemeNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMemeName(e.target.value);
@@ -48,7 +50,7 @@ function App() {
     };
 
     const handleBuyClick = () => {
-        console.log('Buy IJC clicked');
+        setShowBuyModal(true);
     };
 
     const handleCreateClick = () => {
@@ -100,6 +102,11 @@ function App() {
                         <MemeFactoryModal
                             isOpen={showMemeFactory}
                             onClose={() => setShowMemeFactory(false)}
+                        />
+
+                        <BuyModal
+                            isOpen={showBuyModal}
+                            onClose={() => setShowBuyModal(false)}
                         />
                     </div>
                 </RainbowKitProvider>
