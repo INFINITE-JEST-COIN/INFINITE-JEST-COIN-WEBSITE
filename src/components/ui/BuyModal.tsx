@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { useSendTransaction } from 'wagmi'
+import { useSendTransaction, useReadContract } from 'wagmi'
 import { parseEther } from 'viem'
+import { pairAbi } from '../../abis/pair';
+import { ijcAbi } from '../../abis/ijc';
 
 interface BuyModalProps {
     isOpen: boolean;
@@ -15,6 +17,20 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
         bonusAmount: '0',
         liquidityAdded: '0'
     });
+    const [currentPrice, setCurrentPrice] = useState(0);
+
+    const { data: reserves }: { data: any } = useReadContract({
+        abi: pairAbi,
+        address: import.meta.env.VITE_PAIR_CONTRACT_ADDRESS || "",
+        functionName: 'getReserves',
+    })
+
+    const { data: totalBonusReward }: { data: any } = useReadContract({
+        abi: ijcAbi,
+        address: import.meta.env.VITE_IJC_CONTRACT_ADDRESS || "",
+        functionName: 'balanceOf',
+        args: [import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS || ""],
+    })
 
     const { sendTransaction } = useSendTransaction()
 
@@ -25,54 +41,54 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
         })
     }
 
+    useEffect(() => {
+        if (reserves) {
+            setCurrentPrice(Number(reserves[1]) / Number(reserves[0]));
+        }
+    }, [reserves])
+
     const renderAddressWithIcon = (address: string, label: string) => (
         <div className="flex items-center justify-between py-2">
             <div className="text-sm text-neutral-600">
                 <span className="font-medium mr-2">{label}:</span>
                 <span className="font-mono text-xs">{address.slice(0, 6)}...{address.slice(-4)}</span>
             </div>
-            <a 
+            <a
                 href={`https://${import.meta.env.VITE_CHAIN_ID === '8453' ? 'basescan.org' : 'sepolia.basescan.org'}/address/${address}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-fuchsia-500 hover:text-fuchsia-600"
             >
-                <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    className="h-5 w-5" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
                     stroke="currentColor"
                 >
-                    <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                     />
                 </svg>
             </a>
         </div>
     );
 
-    // Mock prices - replace with actual data from your smart contract
-    const mockData = {
-        ijcPrice: 0.0001, // ETH
-        totalBonusReward: 1000000, // IJC
-        bonusRate: 0.1 // 10%
-    };
+    const bonusRate = 0.1;
 
     useEffect(() => {
         if (ethAmount && !isNaN(Number(ethAmount))) {
             const eth = Number(ethAmount);
-            const ijcAmount = eth / mockData.ijcPrice;
-            const bonusAmount = ijcAmount * mockData.bonusRate;
-            const liquidityAdded = eth * 0.97; // Assuming 3% slippage
+            const ijcAmount = eth / currentPrice;
+            const bonusAmount = ijcAmount * bonusRate;
 
             setCalculations({
                 ijcAmount: ijcAmount.toFixed(2),
                 bonusAmount: bonusAmount.toFixed(2),
-                liquidityAdded: liquidityAdded.toFixed(4)
+                liquidityAdded: eth.toFixed(4)
             });
         }
     }, [ethAmount]);
@@ -87,7 +103,7 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
             exit={{ opacity: 0 }}
         >
             <motion.div
-                className="bg-white rounded-xl p-8 max-w-md w-full mx-4 relative"
+                className="bg-white rounded-xl p-8 max-w-md w-full mx-4 relative overflow-y-auto max-h-[90vh]"
                 initial={{ scale: 0.8, y: 50 }}
                 animate={{ scale: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
@@ -111,10 +127,10 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
                     </div>
                     <div className="bg-fuchsia-50 p-4 rounded-lg space-y-2">
                         <p className="text-sm text-fuchsia-600">
-                            Current Price: {mockData.ijcPrice} ETH
+                            Current Price: {currentPrice} ETH
                         </p>
                         <p className="text-sm text-fuchsia-600">
-                            Total Bonus Reward: {mockData.totalBonusReward.toLocaleString()} IJC
+                            Total Bonus Reward: {(Number(totalBonusReward) / 10 ** 18).toFixed(0)} IJC
                         </p>
                     </div>
 
@@ -124,6 +140,7 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
                         <input
                             type="number"
                             value={ethAmount}
+                            min={0}
                             onChange={(e) => setEthAmount(e.target.value)}
                             placeholder="0.0"
                             className="w-full p-4 border-2 border-fuchsia-200 rounded-lg focus:border-fuchsia-500 focus:ring-2 focus:ring-fuchsia-200 transition-all"
@@ -134,13 +151,12 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
                     {ethAmount && !isNaN(Number(ethAmount)) && (
                         <div className="space-y-3 bg-neutral-50 p-4 rounded-lg">
                             <p className="text-sm text-neutral-600">
-                                You will receive: <span className="text-fuchsia-600 font-semibold">{calculations.ijcAmount} IJC</span>
-                            </p>
-                            <p className="text-sm text-neutral-600">
                                 Bonus tokens: <span className="text-fuchsia-600 font-semibold">{calculations.bonusAmount} IJC</span>
                             </p>
                             <p className="text-sm text-neutral-600">
                                 Liquidity added: <span className="text-fuchsia-600 font-semibold">{calculations.liquidityAdded} ETH</span>
+                                &nbsp;&&nbsp;
+                                <span className="text-fuchsia-600 font-semibold">{calculations.ijcAmount} IJC</span>
                             </p>
                         </div>
                     )}

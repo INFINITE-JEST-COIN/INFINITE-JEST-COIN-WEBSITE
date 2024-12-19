@@ -26,7 +26,7 @@ const FloatingButtons = ({ onBuyClick }: FloatingButtonsProps) => {
                 whileTap={{ scale: 0.95 }}
                 transition={{ duration: 0.5 }}
             >
-                Buy IJC
+                Get Bonus
             </motion.button>
 
             {/* Enter App Button */}
