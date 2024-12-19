@@ -13,6 +13,14 @@ import Modal from './components/ui/Modal';
 import MemeFactoryModal from './components/ui/MemeFactoryModal';
 import DecorativeElement from './components/ui/DecorativeElement';
 import ClosingThoughts from './components/sections/ClosingThoughts';
+import { WagmiConfig } from 'wagmi'
+import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
+import { config } from './config/wagmi'
+import '@rainbow-me/rainbowkit/styles.css'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+// Create a client
+const queryClient = new QueryClient()
 
 function App() {
     const [showModal, setShowModal] = useState(false);
@@ -48,49 +56,55 @@ function App() {
     };
 
     return (
-        <div className="relative min-h-screen w-full bg-white text-black font-sans overflow-hidden">
-            <ParticleBackground />
+        <WagmiConfig config={config}>
+            <QueryClientProvider client={queryClient}>
+                <RainbowKitProvider>
+                    <div className="relative min-h-screen w-full bg-white text-black font-sans overflow-hidden">
+                        <ParticleBackground />
 
-            <div className="pointer-events-none fixed inset-0 flex justify-center items-center opacity-30 z-10">
-                <GlowingInfinite color={themeColor} />
-            </div>
+                        <div className="pointer-events-none fixed inset-0 flex justify-center items-center opacity-30 z-10">
+                            <GlowingInfinite color={themeColor} />
+                        </div>
 
-            <DecorativeElement themeColor={themeColor} />
+                        <DecorativeElement themeColor={themeColor} />
 
-            <Header />
-            <Hero />
-            <CoreFeatures />
-            <Loop onEnterInfinite={() => setShowModal(true)} />
-            <MemeFactory
-                memeName={memeName}
-                memeSymbol={memeSymbol}
-                memeIdea={memeIdea}
-                isGeneratingMeme={isGeneratingMeme}
-                onMemeNameChange={handleMemeNameChange}
-                onMemeSymbolChange={handleMemeSymbolChange}
-                onMemeIdeaChange={handleMemeIdeaChange}
-                onGenerateMeme={handleGenerateMeme}
-            />
-            <ClosingThoughts />
-            <Footer />
+                        <Header />
+                        <Hero />
+                        <CoreFeatures />
+                        <Loop onEnterInfinite={() => setShowModal(true)} />
+                        <MemeFactory
+                            memeName={memeName}
+                            memeSymbol={memeSymbol}
+                            memeIdea={memeIdea}
+                            isGeneratingMeme={isGeneratingMeme}
+                            onMemeNameChange={handleMemeNameChange}
+                            onMemeSymbolChange={handleMemeSymbolChange}
+                            onMemeIdeaChange={handleMemeIdeaChange}
+                            onGenerateMeme={handleGenerateMeme}
+                        />
+                        <ClosingThoughts />
+                        <Footer />
 
-            <FloatingButtons
-                onBuyClick={handleBuyClick}
-                onCreateClick={handleCreateClick}
-            />
-            <ScrollToTopButton />
+                        <FloatingButtons
+                            onBuyClick={handleBuyClick}
+                            onCreateClick={handleCreateClick}
+                        />
+                        <ScrollToTopButton />
 
-            <Modal
-                isOpen={showModal}
-                onClose={() => setShowModal(false)}
-                themeColor={themeColor}
-            />
+                        <Modal
+                            isOpen={showModal}
+                            onClose={() => setShowModal(false)}
+                            themeColor={themeColor}
+                        />
 
-            <MemeFactoryModal
-                isOpen={showMemeFactory}
-                onClose={() => setShowMemeFactory(false)}
-            />
-        </div>
+                        <MemeFactoryModal
+                            isOpen={showMemeFactory}
+                            onClose={() => setShowMemeFactory(false)}
+                        />
+                    </div>
+                </RainbowKitProvider>
+            </QueryClientProvider>
+        </WagmiConfig>
     );
 }
 
