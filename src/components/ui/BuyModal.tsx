@@ -14,6 +14,7 @@ interface BuyModalProps {
 const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
     const [ethAmount, setEthAmount] = useState<string>('');
     const [isProcessing, setIsProcessing] = useState(false);
+    const [copiedAddresses, setCopiedAddresses] = useState<{ [key: string]: boolean }>({});
     const { address } = useAccount();
     const [calculations, setCalculations] = useState({
         ijcAmount: '0',
@@ -43,6 +44,7 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
             await sendTransaction({
                 to: import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS || "",
                 value: parseEther(ethAmount),
+                data: "0xd0e30db0"
             })
         } catch (error) {
             console.error('Transaction failed:', error);
@@ -50,6 +52,14 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
             setIsProcessing(false);
         }
     }
+
+    const handleCopy = (address: string) => {
+        navigator.clipboard.writeText(address);
+        setCopiedAddresses(prev => ({ ...prev, [address]: true }));
+        setTimeout(() => {
+            setCopiedAddresses(prev => ({ ...prev, [address]: false }));
+        }, 1000); // Reset after 1 seconds
+    };
 
     useEffect(() => {
         if (reserves) {
@@ -63,27 +73,67 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
                 <span className="font-medium mr-2">{label}:</span>
                 <span className="font-mono text-xs">{address.slice(0, 6)}...{address.slice(-4)}</span>
             </div>
-            <a
-                href={`https://${import.meta.env.VITE_CHAIN_ID === '8453' ? 'basescan.org' : 'sepolia.basescan.org'}/address/${address}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-fuchsia-500 hover:text-fuchsia-600"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+            {/* Copy button */}
+            <div className="flex gap-2">
+                <button
+                    onClick={() => handleCopy(address)}
+                    className="text-fuchsia-500 hover:text-fuchsia-600"
+                    title={copiedAddresses[address] ? "Copied!" : "Copy address"}
                 >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                    />
-                </svg>
-            </a>
+                    {copiedAddresses[address] ? (
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M5 13l4 4L19 7"
+                            />
+                        </svg>
+                    ) : (
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                            />
+                        </svg>
+                    )}
+                </button>
+                <a
+                    href={`https://${import.meta.env.VITE_CHAIN_ID === '8453' ? 'basescan.org' : 'sepolia.basescan.org'}/address/${address}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-fuchsia-500 hover:text-fuchsia-600"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
+                    </svg>
+                </a>
+            </div>
         </div>
     );
 
@@ -201,6 +251,19 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
                     )}
 
                     {renderActionButton()}
+                </div>
+
+                <div className="bg-yellow-50 p-4 rounded-lg my-4">
+                    <p className="text-sm text-yellow-700 text-justify">
+                        Note: You may see a security alert because this is a custom contract interaction.
+                        Please verify the contract address and transaction details before proceeding.<br />
+                        <a href={`https://${import.meta.env.VITE_CHAIN_ID === '8453' ? 'basescan.org' : 'sepolia.basescan.org'}/address/${import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS}`} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+                            CA:
+                            <code className="font-mono text-red-500 break-all">
+                                {import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS}
+                            </code>
+                        </a>
+                    </p>
                 </div>
             </motion.div>
         </motion.div>
