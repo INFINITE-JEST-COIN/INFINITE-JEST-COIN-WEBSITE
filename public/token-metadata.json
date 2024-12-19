@@ -3,19 +3,20 @@
     "symbol": "JEST",
     "description": "A conceptual token embracing the eternal loop of digital culture. No promises, no endpoints. Just the perpetual wink of a never-ending meme.",
     "decimals": 18,
-    "image": "https://infinitejestcoin.com/infinite-jest-logo.svg",
+    "image": "https://ijc.fun/infinite-jest-logo.svg",
     "properties": {
-        "tokenIcon": "https://infinitejestcoin.com/infinite-jest-logo.svg",
-        "logoURI": "https://infinitejestcoin.com/infinite-jest-logo.svg",
+        "tokenIcon": "https://ijc.fun/infinite-jest-logo.svg",
+        "logoURI": "https://ijc.fun/infinite-jest-logo.svg",
         "themeColor": "#D946EF"
     },
-    "external_url": "https://infinitejestcoin.com",
+    "external_url": "https://ijc.fun",
     "background_color": "FFFFFF",
     "links": {
-        "website": "https://infinitejestcoin.com",
-        "whitepaper": "https://infinitejestcoin.com/whitepaper",
+        "website": "https://ijc.fun",
+        "whitepaper": "https://ijc.fun/whitepaper",
         "twitter": "https://twitter.com/ijcmeme",
-        "telegram": "https://t.me/InfiniteJestCoin",
+        "telegram": "https://t.me/infinitejestcoin",
+        "discord": "https://discord.gg/8KSYAEM6z2",
         "github": "https://github.com/infinite-jest-coin"
     },
     "attributes": {
