@@ -79,7 +79,7 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
                         rel="noopener noreferrer"
                         className="text-blue-500 underline"
                     >
-                        View on Etherscan
+                        View on Basescan
                     </a>
                 </div>
             );
