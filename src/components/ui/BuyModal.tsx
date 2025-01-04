@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { useSendTransaction, useReadContract, useAccount } from 'wagmi'
+import { useReadContract, useAccount, useSendTransaction } from 'wagmi'
 import { parseEther } from 'viem'
 import { pairAbi } from '../../abis/pair';
 import { ijcAbi } from '../../abis/ijc';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { toast } from 'react-toastify';
 
 interface BuyModalProps {
     isOpen: boolean;
@@ -36,15 +37,14 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
         args: [import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS || ""],
     })
 
-    const { sendTransaction, isPending } = useSendTransaction()
+    const { data: hash, sendTransaction, isPending } = useSendTransaction()
 
     const buyAndAddLiquidity = async () => {
         try {
             setIsProcessing(true);
-            await sendTransaction({
+            sendTransaction({
                 to: import.meta.env.VITE_BUY_AND_ADD_LIQUIDITY_CONTRACT_ADDRESS || "",
                 value: parseEther(ethAmount),
-                data: "0xd0e30db0"
             })
         } catch (error) {
             console.error('Transaction failed:', error);
@@ -63,9 +63,28 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
 
     useEffect(() => {
         if (reserves) {
+            console.log(reserves)
             setCurrentPrice(Number(reserves[1]) / Number(reserves[0]));
         }
     }, [reserves])
+
+    useEffect(() => {
+        if (hash) {
+            toast.success(
+                <div>
+                    Transaction successful!{' '}
+                    <a
+                        href={`https://${import.meta.env.VITE_NETWORK_ID === '8453' ? 'basescan.org' : 'sepolia.etherscan.io'}/tx/${hash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 underline"
+                    >
+                        View on Etherscan
+                    </a>
+                </div>
+            );
+        }
+    }, [hash])
 
     const renderAddressWithIcon = (address: string, label: string) => (
         <div className="flex items-center justify-between py-2">

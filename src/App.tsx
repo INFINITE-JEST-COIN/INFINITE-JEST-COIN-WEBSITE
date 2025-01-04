@@ -19,6 +19,8 @@ import { config } from './config/wagmi'
 import '@rainbow-me/rainbowkit/styles.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import BuyModal from './components/ui/BuyModal';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 // Create a client
 const queryClient = new QueryClient()
@@ -111,6 +113,7 @@ function App() {
                     </div>
                 </RainbowKitProvider>
             </QueryClientProvider>
+            <ToastContainer />
         </WagmiConfig>
     );
 }

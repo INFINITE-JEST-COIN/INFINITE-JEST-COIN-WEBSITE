@@ -48,7 +48,9 @@ const Footer = () => {
                             className="text-neutral-400 hover:text-fuchsia-500 transition-colors"
                             aria-label={link.name}
                         >
-                            {link.icon}
+                            <div style={{ width: '20px', height: '20px' }}>
+                                {link.icon}
+                            </div>
                         </a>
                     ))}
                 </div>
