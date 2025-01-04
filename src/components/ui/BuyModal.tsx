@@ -83,6 +83,8 @@ const BuyModal = ({ isOpen, onClose }: BuyModalProps) => {
                     </a>
                 </div>
             );
+            setEthAmount('');
+            onClose();
         }
     }, [hash])
 
